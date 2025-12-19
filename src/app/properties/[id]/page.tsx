@@ -3,9 +3,10 @@ import { Card } from "@/components/ui/Card";
 import { ArrowRight, MapPin, ShieldCheck, TrendingUp, Download, CheckCircle, ImageIcon } from "lucide-react";
 import Link from "next/link";
 
-export default function PropertyDetailPage({ params }: { params: { id: string } }) {
+export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   // Mock Data Logic
-  const isDholera = params.id === "dholera-sir-phase-1" || params.id === "dholera";
+  const isDholera = id === "dholera-sir-phase-1" || id === "dholera";
   
   const property = isDholera ? {
     name: "Dholera SIR - Phase 1",
@@ -22,7 +23,7 @@ export default function PropertyDetailPage({ params }: { params: { id: string } 
     targetIRR: "100%",
     fundingStatus: 65,
   } : {
-    name: params.id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+    name: id.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
     location: "Gujarat, India",
     description: "This is a premium investment opportunity with high growth potential. Located in a rapidly developing corridor.",
     highlights: ["Prime Location", "High Appreciation", "Secure Title", "Strategic Growth Zone"],
