@@ -78,7 +78,7 @@ export default function MarketplacePage() {
   };
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-12 pb-24">
+    <div className="container mx-auto px-4 md:px-6 pt-32 pb-24">
       {/* Header & Stats */}
       <div className="mb-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">

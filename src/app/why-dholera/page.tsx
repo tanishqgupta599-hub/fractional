@@ -156,6 +156,66 @@ export default function WhyDholeraPage() {
         </div>
       </section>
 
+      {/* 2.5 Strategic Growth Timeline */}
+      <section className="py-24 bg-black/50 border-y border-white/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">The Rise of a Mega City</h2>
+            <p className="text-gray-400">Key milestones defining Dholera's trajectory</p>
+          </div>
+          
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent hidden md:block" />
+            
+            <div className="space-y-12 relative">
+              {[
+                { year: "2009", title: "The Vision", desc: "Dholera SIR Act passed, laying the foundation for India's first smart city." },
+                { year: "2013", title: "Planning Phase", desc: "Master planning completed by Halcrow (UK) and AECOM (USA)." },
+                { year: "2023", title: "Infrastructure Ready", desc: "Trunk infrastructure, including roads and utilities, completed for Activation Area." },
+                { year: "2024", title: "Tata Semiconductor", desc: "Groundbreaking for India's first semiconductor fab worth ₹91,000 Cr." },
+                { year: "2026", title: "Airport Operational", desc: "Dholera International Airport expected to commence cargo operations." }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`flex flex-col md:flex-row items-center gap-8 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                >
+                  <div className="flex-1 text-center md:text-right">
+                    {i % 2 === 0 && (
+                      <div className="md:pr-12">
+                        <div className="text-3xl font-bold text-blue-400 mb-2">{item.year}</div>
+                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                        <p className="text-gray-400">{item.desc}</p>
+                      </div>
+                    )}
+                    {i % 2 !== 0 && <div className="hidden md:block" />}
+                  </div>
+                  
+                  <div className="relative flex items-center justify-center">
+                    <div className="h-4 w-4 bg-blue-500 rounded-full ring-4 ring-blue-500/20 z-10" />
+                  </div>
+                  
+                  <div className="flex-1 text-center md:text-left">
+                    {i % 2 !== 0 && (
+                      <div className="md:pl-12">
+                        <div className="text-3xl font-bold text-blue-400 mb-2">{item.year}</div>
+                        <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                        <p className="text-gray-400">{item.desc}</p>
+                      </div>
+                    )}
+                    {i % 2 === 0 && <div className="hidden md:block" />}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3. Connectivity (Airport/Expressway) */}
       <section className="py-32 bg-gradient-to-b from-black to-blue-950/20 relative">
         <div className="container mx-auto px-4">

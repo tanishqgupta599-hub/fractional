@@ -9,12 +9,12 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
-                <span className="text-background font-bold text-xs">F</span>
+                <span className="text-background font-bold text-xs">A</span>
               </div>
-              <span className="text-lg font-bold tracking-tight text-white">FRACTIONAL</span>
+              <span className="text-lg font-bold tracking-tight text-white">ASSETORY</span>
             </div>
             <p className="text-sm text-gray-400 mb-6 max-w-xs">
-              Democratizing access to premium real estate assets. Own a piece of the future, fraction by fraction.
+              Own Smart. Grow Strong.
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-gray-400 hover:text-primary">
@@ -43,9 +43,9 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Company</h3>
             <ul className="space-y-3 text-sm text-gray-400">
               <li><Link href="/founders" className="hover:text-primary">Founders</Link></li>
-              <li><Link href="/safety" className="hover:text-primary">Safety & Governance</Link></li>
+              <li><Link href="/trust" className="hover:text-primary">Trust & Safety</Link></li>
               <li><Link href="#" className="hover:text-primary">Careers</Link></li>
-              <li><Link href="#" className="hover:text-primary">Contact</Link></li>
+              <li><Link href="/contact" className="hover:text-primary">Contact</Link></li>
             </ul>
           </div>
           
@@ -54,22 +54,22 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span>123 Financial District, Tech City, India</span>
+                <span>903 Antilla The Taj Towers, Mohali Punjab, India</span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <span>invest@fractional.com</span>
+                <span>invest@assetory.com</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <span>+91 98765 43210</span>
+                <span>+91 8837549309</span>
               </li>
             </ul>
           </div>
         </div>
         
         <div className="mt-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>&copy; 2024 Fractional Assets Pvt Ltd. All rights reserved.</p>
+          <p>&copy; 2026 Assetory Pvt Ltd. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-white">Privacy Policy</Link>
             <Link href="#" className="hover:text-white">Terms of Service</Link>

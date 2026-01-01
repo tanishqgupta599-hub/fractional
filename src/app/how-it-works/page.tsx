@@ -32,9 +32,9 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="container mx-auto px-4 md:px-6 py-20">
+    <div className="container mx-auto px-4 md:px-6 pt-32 pb-20">
       <div className="max-w-3xl mx-auto text-center mb-20">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">How Fractional Ownership Works</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">How ASSETORY Works</h1>
         <p className="text-xl text-gray-400">
           A simple, transparent, and secure way to build your real estate portfolio.
         </p>

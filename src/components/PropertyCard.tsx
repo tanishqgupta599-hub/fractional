@@ -12,7 +12,7 @@ interface PropertyCardProps {
   totalValuation: string;
   expectedCagr: string;
   risk: "Low" | "Medium" | "High";
-  status: "Open" | "Fully Funded" | "Coming Soon";
+  status: "Open" | "Fully Funded" | "Coming Soon" | "Upcoming";
   image: string; // Placeholder for now
 }
 
@@ -21,13 +21,22 @@ export default function PropertyCard({ property }: { property: PropertyCardProps
     <Card hover className="flex flex-col h-full overflow-hidden group">
       {/* Image Placeholder */}
       <div className="h-48 bg-gray-800 relative overflow-hidden">
+        {property.image && (
+          <img
+            src={property.image}
+            alt={property.name}
+            className="w-full h-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
         {/* In a real app, use Next Image here */}
         <div className="absolute top-4 right-4 z-20">
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-            property.status === 'Open' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 
-            property.status === 'Fully Funded' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-            'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+            property.status === 'Open' 
+              ? 'bg-green-500/20 text-green-400 border border-green-500/30' 
+              : property.status === 'Fully Funded' 
+              ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+              : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
           }`}>
             {property.status}
           </span>

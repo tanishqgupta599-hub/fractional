@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function ExitPage() {
   return (
-    <div className="container mx-auto px-4 md:px-6 py-20">
+    <div className="container mx-auto px-4 md:px-6 pt-32 pb-20">
       <div className="max-w-3xl mx-auto text-center mb-20">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Exit & Liquidity</h1>
         <p className="text-xl text-gray-400">
