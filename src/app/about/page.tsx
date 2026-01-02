@@ -332,22 +332,9 @@ function ManifestoScroll() {
     <section ref={containerRef} className="py-40 bg-[#050505] relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <div className="max-w-4xl mx-auto">
-          {words.map((word, i) => {
-            // Logic to fade in words one by one based on scroll
-            const start = i / words.length;
-            const end = start + (1 / words.length);
-            const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1]);
-            
-            return (
-              <motion.span
-                key={i}
-                style={{ opacity, willChange: "opacity" }}
-                className="inline-block mr-4 mb-2 text-4xl md:text-6xl lg:text-7xl font-serif text-white leading-tight transition-colors duration-200"
-              >
-                {word}
-              </motion.span>
-            )
-          })}
+          {words.map((word, i) => (
+             <Word key={i} word={word} i={i} total={words.length} scrollYProgress={scrollYProgress} />
+          ))}
         </div>
         
         <div className="mt-24 grid md:grid-cols-3 gap-8 border-t border-white/10 pt-12">
