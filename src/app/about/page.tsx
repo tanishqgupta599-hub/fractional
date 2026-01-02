@@ -373,6 +373,21 @@ function ManifestoScroll() {
   );
 }
 
+function Word({ word, i, total, scrollYProgress }: { word: string, i: number, total: number, scrollYProgress: any }) {
+  const start = i / total;
+  const end = start + (1 / total);
+  const opacity = useTransform(scrollYProgress, [start, end], [0.1, 1]);
+
+  return (
+    <motion.span
+      style={{ opacity, willChange: "opacity" }}
+      className="inline-block mr-4 mb-2 text-4xl md:text-6xl lg:text-7xl font-serif text-white leading-tight transition-colors duration-200"
+    >
+      {word}
+    </motion.span>
+  );
+}
+
 function FoundersNote() {
   return (
     <section className="py-32 relative">
