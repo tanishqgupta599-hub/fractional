@@ -1,10 +1,10 @@
 import { Resend } from "resend";
 
-const RESEND_API_KEY = process.env.RESEND_API_KEY!;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
 const FROM_EMAIL = process.env.FROM_EMAIL || "noreply@fractional.app";
 
-const resend = new Resend(RESEND_API_KEY);
+const resend = RESEND_API_KEY ? new Resend(RESEND_API_KEY) : null;
 
 export async function sendAdminLeadAlert(payload: {
   name: string;
@@ -14,7 +14,7 @@ export async function sendAdminLeadAlert(payload: {
   budgetRange?: string;
   message?: string;
 }) {
-  if (!RESEND_API_KEY || !ADMIN_EMAIL) return;
+  if (!resend || !ADMIN_EMAIL) return;
   await resend.emails.send({
     from: FROM_EMAIL,
     to: ADMIN_EMAIL,
@@ -34,7 +34,7 @@ export async function sendAdminLeadAlert(payload: {
 }
 
 export async function sendLeadAutoReply(to: string, name: string) {
-  if (!RESEND_API_KEY) return;
+  if (!resend) return;
   await resend.emails.send({
     from: FROM_EMAIL,
     to,

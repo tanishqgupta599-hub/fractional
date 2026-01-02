@@ -2,19 +2,129 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ArrowRight, MapPin, ShieldCheck, TrendingUp, Download, CheckCircle, ImageIcon } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import GrowthChart from "@/components/GrowthChart";
 import { createServerClient } from "@/lib/supabase-server";
+
+const SAMPLE_PROPERTIES = [
+  {
+    id: 'otariya-phase-1',
+    slug: 'otariya-phase-1',
+    name: 'Otariya - Phase 1',
+    location: 'TP 3A , Dholera, Gujarat',
+    type: 'Residential Project',
+    category: 'Residential',
+    price_per_fraction: 5000,
+    total_valuation: 4000000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Open',
+    image_url: 'https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop',
+    highlights: ['Residential Zone', 'Secure Title', 'Growth Corridor', 'Proximity to Infrastructure'],
+    description: 'Residential project in the Otariya locality of Dholera with strong appreciation potential and secure title.'
+  },
+  {
+    id: 'bavliyari-phase-1',
+    slug: 'bavliyari-phase-1',
+    name: 'Bavliyari Investment Zone',
+    location: 'Bavliyari, Gujarat',
+    type: 'Industrial Land',
+    category: 'Industrial',
+    price_per_fraction: 10000,
+    total_valuation: 8500000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1992&auto=format&fit=crop',
+    highlights: ['Industrial Zone', 'Logistics Hub', 'High Demand', 'Strategic Location'],
+    description: 'Industrial Land opportunity near key logistic corridors.'
+  },
+  {
+    id: 'panchi-greens',
+    slug: 'panchi-greens',
+    name: 'Panchi Greens',
+    location: 'Panchi, Gujarat',
+    type: 'Ultra Premium Plotting',
+    category: 'Residential',
+    price_per_fraction: 2500,
+    total_valuation: 2500000,
+    target_irr: 93,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop',
+    highlights: ['Premium Location', 'High Appreciation', 'Secure Title', 'Green Surroundings'],
+    description: 'Ultra Premium Plotting opportunity in a rapidly developing area.'
+  },
+  {
+    id: 'hebatpur-hac',
+    slug: 'hebatpur-hac',
+    name: 'Hebatpur HAC',
+    location: 'Hebatpur, Ahmedabad',
+    type: 'Premium Plotting',
+    category: 'Residential',
+    price_per_fraction: 25000,
+    total_valuation: 25000000,
+    target_irr: 106,
+    risk: 'Low',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1626178793926-22b28830aa30?q=80&w=2070&auto=format&fit=crop',
+    highlights: ['Prime City Location', 'Established Neighborhood', 'High Value Asset', 'Excellent Connectivity'],
+    description: 'Premium Plotting in one of Ahmedabad\'s most sought-after locations.'
+  },
+  {
+    id: 'zhanki-reserves',
+    slug: 'zhanki-reserves',
+    name: 'Zhanki Reserves',
+    location: 'Zhanki, Gujarat',
+    type: 'Future Development',
+    category: 'Commercial',
+    price_per_fraction: 7500,
+    total_valuation: 6000000,
+    target_irr: 88,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1513584685908-2274653dbf29?q=80&w=2070&auto=format&fit=crop',
+    highlights: ['Strategic Investment', 'Long-term Growth', 'Emerging Zone', 'Low Entry Point'],
+    description: 'Future Development zone with massive long-term potential.'
+  },
+  {
+    id: 'dholera-sir-phase-1',
+    slug: 'dholera-sir-phase-1',
+    name: 'Dholera SIR - Phase 1',
+    location: 'TP 2 West, Dholera Special Investment Region, Gujarat',
+    type: 'Commercial Zone',
+    category: 'Commercial',
+    price_per_fraction: 5000,
+    total_valuation: 4000000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop',
+    highlights: ['Adjacent to 250m wide expressway', '2km from Tata Semiconductor Fab plant', 'International Airport operational by 2026', 'Complete underground infrastructure ready'],
+    description: 'A prime resedential land parcel located in the heart of India\'s first Platinum Rated Green Field Smart City.'
+  }
+];
 
 export default async function PropertyDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = createServerClient();
+  let property = null;
 
-  const { data: property, error } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('slug', id)
-    .single();
+  try {
+    const supabase = await createServerClient();
+    const { data, error: sbError } = await supabase
+      .from('properties')
+      .select('*')
+      .eq('slug', id)
+      .single();
 
-  if (error || !property) {
+    if (sbError) throw sbError;
+    property = data;
+  } catch (e) {
+    console.error("Supabase error or not configured, using fallback:", e);
+    property = SAMPLE_PROPERTIES.find(p => p.slug === id || p.id === id);
+  }
+
+  if (!property) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
@@ -46,10 +156,12 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
         
         {property.image_url ? (
           <div className="absolute inset-0">
-             <img 
-               src={property.image_url} 
+             <Image
+               src={property.image_url}
                alt={property.name}
-               className="w-full h-full object-cover opacity-60"
+               fill
+               className="object-cover opacity-60"
+               sizes="100vw"
              />
           </div>
         ) : (
@@ -121,10 +233,12 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                   </Button>
                 </div>
                 <div className="relative aspect-video bg-black flex items-center justify-center overflow-hidden">
-                   <img 
-                    src="/otariya-fp167-layout.jpg" 
-                    alt="Otariya Layout Plan" 
-                    className="w-full h-full object-contain hover:scale-105 transition-transform duration-700"
+                   <Image
+                    src="/otariya-fp167-layout.jpg"
+                    alt="Otariya Layout Plan"
+                    fill
+                    className="object-contain hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1200px) 100vw, 800px"
                    />
                 </div>
               </section>
@@ -181,25 +295,15 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
                 </div>
               </div>
               
-              {/* Simple CSS Growth Chart */}
+              {/* Growth Chart */}
               <div className="p-6 rounded-2xl bg-white/5 border border-white/5">
-                <h3 className="text-sm font-semibold text-gray-400 mb-6">Projected Value Appreciation (5 Years)</h3>
-                <div className="flex items-end justify-between gap-4 h-48">
-                  {[1, 1.2, 1.5, 1.9, 2.4].map((multiplier, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                      <div className="text-xs text-green-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {Math.round(multiplier * 100)}%
-                      </div>
-                      <div 
-                        className="w-full bg-gradient-to-t from-primary/20 to-primary/60 rounded-t-md relative overflow-hidden group-hover:from-primary/40 group-hover:to-primary/80 transition-colors"
-                        style={{ height: `${(multiplier / 2.5) * 100}%` }}
-                      >
-                         <div className="absolute top-0 left-0 w-full h-1 bg-white/20" />
-                      </div>
-                      <div className="text-xs text-gray-500">Year {i + 1}</div>
-                    </div>
-                  ))}
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-sm font-semibold text-gray-400">Projected Value Appreciation (5 Years)</h3>
+                  <span className="text-[10px] text-gray-500 bg-white/5 px-2 py-1 rounded border border-white/5">
+                    * Projections only. Not guaranteed. Market dependent.
+                  </span>
                 </div>
+                <GrowthChart />
               </div>
             </section>
           </div>

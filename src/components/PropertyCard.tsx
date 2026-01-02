@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card } from "./ui/Card";
 import { Button } from "./ui/Button";
 import { MapPin, TrendingUp, AlertCircle, ArrowUpRight } from "lucide-react";
@@ -22,14 +23,16 @@ export default function PropertyCard({ property }: { property: PropertyCardProps
       {/* Image Placeholder */}
       <div className="h-48 bg-gray-800 relative overflow-hidden">
         {property.image && (
-          <img
+          <Image
             src={property.image}
             alt={property.name}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-        {/* In a real app, use Next Image here */}
+        {/* Status Badge */}
         <div className="absolute top-4 right-4 z-20">
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${
             property.status === 'Open' 

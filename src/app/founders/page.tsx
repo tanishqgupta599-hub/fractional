@@ -3,8 +3,13 @@
 import { Button } from "@/components/ui/Button";
 import { Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 
 export default function FoundersPage() {
+  const [tanishqSrc, setTanishqSrc] = useState("/tanishq.jpg");
+  const [lalitSrc, setLalitSrc] = useState("/lalit.jpg");
+
   return (
     <div className="container mx-auto px-4 md:px-6 pt-32 pb-20">
       <div className="max-w-3xl mx-auto text-center mb-20">
@@ -20,13 +25,15 @@ export default function FoundersPage() {
           <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="relative z-10 bg-card border border-white/5 p-8 rounded-2xl overflow-hidden">
             <div className="h-80 w-full bg-gray-800 mb-8 rounded-xl overflow-hidden relative">
-              <img 
-                src="/tanishq.jpg" 
+              <Image
+                src={tanishqSrc}
                 alt="Tanishq Gupta"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1000&auto=format&fit=crop"; // Premium fallback
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                onError={() => {
+                  setTanishqSrc("https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=1000&auto=format&fit=crop");
                 }}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
               <div className="absolute bottom-4 left-4">
@@ -49,13 +56,15 @@ export default function FoundersPage() {
           <div className="absolute inset-0 bg-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="relative z-10 bg-card border border-white/5 p-8 rounded-2xl overflow-hidden">
             <div className="h-80 w-full bg-gray-800 mb-8 rounded-xl overflow-hidden relative">
-               <img 
-                src="/lalit.jpg" 
+               <Image
+                src={lalitSrc}
                 alt="Lalit Gupta"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                onError={(e) => {
-                  e.currentTarget.src = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000&auto=format&fit=crop"; // Premium fallback
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                onError={() => {
+                  setLalitSrc("https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000&auto=format&fit=crop");
                 }}
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
               <div className="absolute bottom-4 left-4">

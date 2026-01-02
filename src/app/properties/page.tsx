@@ -7,6 +7,93 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { supabaseBrowser } from "@/lib/supabase";
 
+const SAMPLE_PROPERTIES = [
+  {
+    id: 'otariya-phase-1',
+    slug: 'otariya-phase-1',
+    name: 'Otariya - Phase 1',
+    location: 'TP 3A , Dholera, Gujarat',
+    type: 'Residential Project',
+    category: 'Residential',
+    price_per_fraction: 5000,
+    total_valuation: 4000000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Open',
+    image_url: 'https://images.unsplash.com/photo-1592595896551-12b371d546d5?q=80&w=2070&auto=format&fit=crop'
+  },
+  {
+    id: 'bavliyari-phase-1',
+    slug: 'bavliyari-phase-1',
+    name: 'Bavliyari Investment Zone',
+    location: 'Bavliyari, Gujarat',
+    type: 'Industrial Land',
+    category: 'Industrial',
+    price_per_fraction: 10000,
+    total_valuation: 8500000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1582407947304-fd86f028f716?q=80&w=1992&auto=format&fit=crop'
+  },
+  {
+    id: 'panchi-greens',
+    slug: 'panchi-greens',
+    name: 'Panchi Greens',
+    location: 'Panchi, Gujarat',
+    type: 'Ultra Premium Plotting',
+    category: 'Residential',
+    price_per_fraction: 2500,
+    total_valuation: 2500000,
+    target_irr: 93,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop'
+  },
+  {
+    id: 'hebatpur-hac',
+    slug: 'hebatpur-hac',
+    name: 'Hebatpur HAC',
+    location: 'Hebatpur, Ahmedabad',
+    type: 'Premium Plotting',
+    category: 'Residential',
+    price_per_fraction: 25000,
+    total_valuation: 25000000,
+    target_irr: 106,
+    risk: 'Low',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1626178793926-22b28830aa30?q=80&w=2070&auto=format&fit=crop'
+  },
+  {
+    id: 'zhanki-reserves',
+    slug: 'zhanki-reserves',
+    name: 'Zhanki Reserves',
+    location: 'Zhanki, Gujarat',
+    type: 'Future Development',
+    category: 'Commercial',
+    price_per_fraction: 7500,
+    total_valuation: 6000000,
+    target_irr: 88,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1513584685908-2274653dbf29?q=80&w=2070&auto=format&fit=crop'
+  },
+  {
+    id: 'dholera-sir-phase-1',
+    slug: 'dholera-sir-phase-1',
+    name: 'Dholera SIR - Phase 1',
+    location: 'TP 2 West, Dholera Special Investment Region, Gujarat',
+    type: 'Commercial Zone',
+    category: 'Commercial',
+    price_per_fraction: 5000,
+    total_valuation: 4000000,
+    target_irr: 100,
+    risk: 'Medium',
+    status: 'Upcoming',
+    image_url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop'
+  }
+];
+
 export default function PropertiesPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [properties, setProperties] = useState<any[]>([]);
@@ -14,15 +101,21 @@ export default function PropertiesPage() {
 
   useEffect(() => {
     async function fetchProperties() {
-      const supabase = supabaseBrowser();
-      const { data, error } = await supabase
-        .from('properties')
-        .select('*');
-      
-      if (error) {
-        console.error('Error fetching properties:', error);
-      } else {
-        setProperties(data || []);
+      try {
+        const supabase = supabaseBrowser();
+        const { data, error } = await supabase
+          .from('properties')
+          .select('*');
+        
+        if (error) {
+          console.error('Error fetching properties:', error);
+          setProperties(SAMPLE_PROPERTIES);
+        } else {
+          setProperties(data && data.length > 0 ? data : SAMPLE_PROPERTIES);
+        }
+      } catch (e) {
+        console.error('Supabase not configured or error:', e);
+        setProperties(SAMPLE_PROPERTIES);
       }
       setLoading(false);
     }
@@ -141,7 +234,7 @@ export default function PropertiesPage() {
             <div className="text-center py-20 text-gray-500">
               <p className="text-lg">No properties found in this category.</p>
               <Button 
-                variant="link" 
+                variant="ghost" 
                 className="text-[#D4AF37] mt-2"
                 onClick={() => setActiveFilter("All")}
               >
